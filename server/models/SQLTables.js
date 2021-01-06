@@ -58,11 +58,11 @@ async function createTable(queryString) {
   }
 }
 
-// createTable(productsTable)
-// createTable(lowestDailyPriceTable)
-// createTable(usersTable)
-// createTable(usersToProductsTable)
-// createTable(sessionsTable)
+// createTable(productsTable);
+// createTable(lowestDailyPriceTable);
+// createTable(usersTable);
+// createTable(usersToProductsTable);
+// createTable(sessionsTable);
 
 //**********************************************
 
