@@ -7,7 +7,7 @@ const productsTable = `
     _id SERIAL,
     product_name VARCHAR NOT NULL,
     image_url VARCHAR NOT NULL,
-    google_url VARCHAR UNIQUE
+    google_url VARCHAR UNIQUE,
     PRIMARY KEY (_id)
   )`;
 
@@ -58,11 +58,11 @@ async function createTable(queryString) {
   }
 }
 
-// createTable(productsTable)
-// createTable(lowestDailyPriceTable)
-// createTable(usersTable)
-// createTable(usersToProductsTable)
-// createTable(sessionsTable)
+// createTable(productsTable);
+// createTable(lowestDailyPriceTable);
+// createTable(usersTable);
+// createTable(usersToProductsTable);
+// createTable(sessionsTable);
 
 //**********************************************
 
@@ -100,5 +100,3 @@ function insertIntoTable(queryString) {
 // insertIntoTable(lowestDailyPriceInsert);
 // insertIntoTable(usersInsert);
 // insertIntoTable(sessionsInsert);
-
-
