@@ -1,145 +1,141 @@
-import React, { useState, useEffect, useRef } from "react";
-import useInput from "../hooks/useInput";
-import SearchList from "./SearchList";
-import useToggler from "../hooks/useToggler";
-import Loader from "./Loader";
-import { Button, TextField, Dialog } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import Spinner from "./Spinner";
-import useStyles from "../../style/theme";
+import React, { useState, useEffect, useRef } from 'react';
+import useInput from '../hooks/useInput';
+import SearchList from './SearchList';
+import useToggler from '../hooks/useToggler';
+import Loader from './Loader';
+import { Button, TextField, Dialog } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import Spinner from './Spinner';
+import useStyles from '../../style/theme';
 
 const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
-  const firstRender = useRef(true);
-  const [searchVal, handleSearchVal, resetSearch] = useInput("");
-  const [urlInput, setUrl, resetUrl] = useInput("");
-  const [results, setResults] = useState([]);
-  const [isFetching, toggler] = useToggler(false);
-  const [open, setOpen] = useState(false);
-  const [spinner, setSpinner] = useState(false);
-  const classes = useStyles();
+	const firstRender = useRef(true);
+	const [searchVal, handleSearchVal, resetSearch] = useInput('');
+	const [urlInput, setUrl, resetUrl] = useInput('');
+	const [results, setResults] = useState([]);
+	const [isFetching, toggler] = useToggler(false);
+	const [open, setOpen] = useState(false);
+	const [spinner, setSpinner] = useState(false);
+	const classes = useStyles();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!searchVal) return alert("Please fill in the search bar input!");
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (!searchVal) return alert('Please fill in the search bar input!');
 
-    toggler();
-    // const params = {
-    //   api_key: "474447AFDD1D4A1EAD6188D5941E7B86",
-    //   q: "bitcoin",
-    // };
-    fetch(
-      `https://api.scaleserp.com/search?search_type=shopping&price_low_to_high&num=10&api_key=474447AFDD1D4A1EAD6188D5941E7B86&q=${searchVal}`
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        console.log("response", response);
-        const goodUrl = "google.com/shopping/product/";
+		toggler();
 
-        const items = response.shopping_results
-          .filter((item) => {
-            return item.link.includes(goodUrl);
-          })
-          .slice(0, 10);
+		fetch(
+			`https://api.scaleserp.com/search?search_type=shopping&price_low_to_high&num=10&api_key=INSERT_YOUR_OWN_KEY_HERE&q=${searchVal}`
+		)
+			.then((response) => response.json())
+			.then((response) => {
+				const goodUrl = 'google.com/shopping/product/';
 
-        console.log("items: ", items);
-        setOpen(true);
-        setResults(items);
-        console.log("open: ", open);
-        firstRender.current = false;
-      })
-      .catch((err) => console.log(err));
+				const items = response.shopping_results
+					.filter((item) => {
+						return item.link.includes(goodUrl);
+					})
+					.slice(0, 10);
 
-    resetSearch();
-  };
+				console.log('items: ', items);
+				setOpen(true);
+				setResults(items);
+				console.log('open: ', open);
+				firstRender.current = false;
+			})
+			.catch((err) => console.log(err));
 
-  const clearResults = () => {
-    setOpen(false);
-    setResults([]);
-  };
+		resetSearch();
+	};
 
-  const handleUrl = (e) => {
-    e.preventDefault();
+	const clearResults = () => {
+		setOpen(false);
+		setResults([]);
+	};
 
-    const goodUrl = "google.com/shopping/product/";
+	const handleUrl = (e) => {
+		e.preventDefault();
 
-    if (!urlInput.includes(goodUrl)) {
-      resetUrl();
-      return alert("Invalid product url. Please try again");
-    }
+		const goodUrl = 'google.com/shopping/product/';
 
-    setSpinner(true);
-  };
+		if (!urlInput.includes(goodUrl)) {
+			resetUrl();
+			return alert('Invalid product url. Please try again');
+		}
 
-  useEffect(() => {
-    if (firstRender.current) return;
-    if (results.length < 1) return; // maybe render a component for no products
-    toggler();
-  }, [results]);
+		setSpinner(true);
+	};
 
-  useEffect(() => {
-    if (!spinner) return;
+	useEffect(() => {
+		if (firstRender.current) return;
+		if (results.length < 1) return; // maybe render a component for no products
+		toggler();
+	}, [results]);
 
-    const google_url = urlInput;
+	useEffect(() => {
+		if (!spinner) return;
 
-    fetch(`/api/products/${userId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        google_url,
-        userId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        getAllProducts();
-        setSpinner(false);
-        resetUrl();
-      })
-      .catch((err) => {
-        console.log("main ue addProduct", err);
-        setSpinner(false);
-        alert("Uh oh! Seems like the link is broken. Please try again.");
-        resetUrl();
-      });
-  }, [spinner]);
+		const google_url = urlInput;
 
-  if (isFetching) return <Loader />;
-  if (spinner) return <Spinner />;
+		fetch(`/api/products/${userId}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				google_url,
+				userId,
+			}),
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				getAllProducts();
+				setSpinner(false);
+				resetUrl();
+			})
+			.catch((err) => {
+				console.log('main ue addProduct', err);
+				setSpinner(false);
+				alert('Uh oh! Seems like the link is broken. Please try again.');
+				resetUrl();
+			});
+	}, [spinner]);
 
-  return results.length > 0 ? (
-    <Dialog open={open} onClose={clearResults}>
-      <SearchList
-        startSpinner={startSpinner}
-        results={results}
-        clearResults={clearResults}
-        addProduct={addProduct}
-        setOpen={setOpen}
-      />
-    </Dialog>
-  ) : (
-    <>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          className={classes.searchBar}
-          variant="outlined"
-          label="Search for a product"
-          value={searchVal}
-          onChange={handleSearchVal}
-          inputProps={{ className: classes.searchBar }}
-        />
-      </form>
-      <Button
-        className={classes.searchBtn}
-        variant="contained"
-        color="primary"
-        onClick={handleSubmit}
-        endIcon={<SearchIcon />}
-      >
-        Search
-      </Button>
-      {/* <TextField
+	if (isFetching) return <Loader />;
+	if (spinner) return <Spinner />;
+
+	return results.length > 0 ? (
+		<Dialog open={open} onClose={clearResults}>
+			<SearchList
+				startSpinner={startSpinner}
+				results={results}
+				clearResults={clearResults}
+				addProduct={addProduct}
+				setOpen={setOpen}
+			/>
+		</Dialog>
+	) : (
+		<>
+			<form onSubmit={handleSubmit}>
+				<TextField
+					className={classes.searchBar}
+					variant="outlined"
+					label="Search for a product"
+					value={searchVal}
+					onChange={handleSearchVal}
+					inputProps={{ className: classes.searchBar }}
+				/>
+			</form>
+			<Button
+				className={classes.searchBtn}
+				variant="contained"
+				color="primary"
+				onClick={handleSubmit}
+				endIcon={<SearchIcon />}
+			>
+				Search
+			</Button>
+			{/* <TextField
 					className={classes.searchBar}
 					variant="outlined"
 					label="Enter Product URL"
@@ -147,7 +143,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
 					onChange={setUrl}
 					inputProps={{ className: classes.searchBar }}
 				/> */}
-      {/* <Button
+			{/* <Button
 					className={classes.searchBtn}
 					variant="contained"
 					color="primary"
@@ -156,8 +152,8 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
 				>
 					Enter Url
 				</Button> */}
-    </>
-  );
+		</>
+	);
 };
 
 export default Search;
