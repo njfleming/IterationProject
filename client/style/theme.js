@@ -4,14 +4,16 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		minHeight: '100vh',
 		paddingTop: '15rem',
-		background: 'linear-gradient(to right, #FFFFFF, #B2FEFA)',
+		background: 'linear-gradient(to right, #FFFFFF, green)',
 	},
 	loginBox: {
 		width: '100%',
+		// height: '100%',
 		display: 'flex',
+		// flexDirection: 'column',
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 	googleLetters: {
 		fontWeight: 'bold',

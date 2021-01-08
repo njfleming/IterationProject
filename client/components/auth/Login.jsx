@@ -35,6 +35,7 @@ const Login = ({ registerUser, loginUser, ...rest }) => {
 		e.preventDefault();
 
 		const err = inputCheck(emailInput, pwInput);
+		
 		if (err) return alert(err);
 
 		loginUser(emailInput, pwInput);
@@ -103,7 +104,7 @@ const Login = ({ registerUser, loginUser, ...rest }) => {
 						</Typography>
 					</div>
 				</Grow>
-				<Slide direction="up" in>
+				<Slide direction="left" in>
 					<Paper className={classes.loginPaper} elevation={10}>
 						<form className={classes.loginForm} onSubmit={handleSubmit}>
 							<TextField
