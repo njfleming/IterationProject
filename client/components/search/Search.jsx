@@ -3,7 +3,17 @@ import useInput from "../hooks/useInput";
 import SearchList from "./SearchList";
 import useToggler from "../hooks/useToggler";
 import Loader from "./Loader";
-import { Button, TextField, Dialog } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Dialog,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+  Grid,
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Spinner from "./Spinner";
 import useStyles from "../../style/theme";
@@ -17,24 +27,51 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
   const [isFetching, toggler] = useToggler(false);
   const [open, setOpen] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const [stores, setStores] = useState({
+    target: false,
+    bestbuy: false,
+    walmart: false,
+    apple: false,
+    newegg: false,
+  });
   const classes = useStyles();
+
+  const storesId = {
+    target: "m10046",
+    bestbuy: "g7187155",
+    walmart: "g8299768",
+    apple: "m3622330",
+    newegg: "g8277688",
+  };
+
+  const handleChange = (event) => {
+    setStores({ ...stores, [event.target.name]: event.target.checked });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!searchVal) return alert("Please fill in the search bar input!");
 
     toggler();
+    let merchants = "";
+    let arr = [];
+    for (let prop in stores) {
+      stores[prop] ? arr.push(storesId[prop]) : null;
+    }
+    merchants = arr.join(",");
+    console.log("merchants", merchants);
     const params = {
-      api_key: "F11338D85B5B485CBDE4F31BF782B232",
+      api_key: "ABE9756864C54FA78838C0FCAD6E4D33",
       search_type: "shopping",
-      sort_by: "price_low_to_high",
+      sort_by: "relevance",
       gl: "us",
       hl: "en",
       google_domain: "google.com",
       q: `${searchVal}`, //,merchagg:g8277688%7Cg829768`,
       shopping_condition: "new",
-      shopping_merchants: "g8277688,g8299768,g7187155",
+      shopping_merchants: merchants,
     };
+
     axios
       .get("https://api.scaleserp.com/search", { params })
       // .then((response) => response.json())
@@ -46,9 +83,12 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         //     return item.link.includes(goodUrl);
         //   })
         //   .slice(0, 20);
-
+        items.forEach(
+          (el) => (el.link = "https://www.google.com/shopping/product/" + el.id)
+        );
         console.log("items: ", items);
         setOpen(true);
+
         setResults(items);
         console.log("open: ", open);
         firstRender.current = false;
@@ -126,42 +166,89 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
     </Dialog>
   ) : (
     <>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          className={classes.searchBar}
-          variant="outlined"
-          label="Search for a product"
-          value={searchVal}
-          onChange={handleSearchVal}
-          inputProps={{ className: classes.searchBar }}
-        />
-      </form>
-      <Button
-        className={classes.searchBtn}
-        variant="contained"
-        color="primary"
-        onClick={handleSubmit}
-        endIcon={<SearchIcon />}
-      >
-        Search
-      </Button>
-      {/* <TextField
-					className={classes.searchBar}
-					variant="outlined"
-					label="Enter Product URL"
-					value={urlInput}
-					onChange={setUrl}
-					inputProps={{ className: classes.searchBar }}
-				/> */}
-      {/* <Button
-					className={classes.searchBtn}
-					variant="contained"
-					color="primary"
-					onClick={handleUrl}
-					endIcon={<SearchIcon />}
-				>
-					Enter Url
-				</Button> */}
+      <Grid container spacing={3}>
+        <Grid item xs={10} justify="center">
+          <form onSubmit={handleSubmit}>
+            <TextField
+              className={classes.searchBar}
+              variant="outlined"
+              label="Search for a product"
+              value={searchVal}
+              onChange={handleSearchVal}
+              inputProps={{ className: classes.searchBar }}
+            />
+          </form>
+        </Grid>
+        <Grid item xs={2}>
+          <Button
+            className={classes.searchBtn}
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            endIcon={<SearchIcon />}
+          >
+            Search
+          </Button>
+        </Grid>
+
+        <Grid item xs={12}>
+          <FormControl component="fieldset" m={2}>
+            <FormLabel component="legend">Select Stores:</FormLabel>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={stores.target}
+                    onChange={handleChange}
+                    name="target"
+                  />
+                }
+                label="Target"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={stores.bestbuy}
+                    onChange={handleChange}
+                    name="bestbuy"
+                  />
+                }
+                label="Best Buy"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={stores.walmart}
+                    onChange={handleChange}
+                    name="walmart"
+                  />
+                }
+                label="Walmart"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={stores.apple}
+                    onChange={handleChange}
+                    name="apple"
+                  />
+                }
+                label="Apple"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={stores.newegg}
+                    onChange={handleChange}
+                    name="newegg"
+                  />
+                }
+                label="New Egg"
+              />
+            </FormGroup>
+          </FormControl>
+        </Grid>
+      </Grid>
     </>
   );
 };
