@@ -7,6 +7,7 @@ import { Button, TextField, Dialog } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Spinner from "./Spinner";
 import useStyles from "../../style/theme";
+const axios = require("axios");
 
 const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
   const firstRender = useRef(true);
@@ -23,23 +24,28 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
     if (!searchVal) return alert("Please fill in the search bar input!");
 
     toggler();
-    // const params = {
-    //   api_key: "474447AFDD1D4A1EAD6188D5941E7B86",
-    //   q: "bitcoin",
-    // };
-    fetch(
-      `https://api.scaleserp.com/search?search_type=shopping&price_low_to_high&num=10&api_key=474447AFDD1D4A1EAD6188D5941E7B86&q=${searchVal}`
-    )
-      .then((response) => response.json())
+    const params = {
+      api_key: "F11338D85B5B485CBDE4F31BF782B232",
+      search_type: "shopping",
+      sort_by: "price_low_to_high",
+      gl: "us",
+      hl: "en",
+      google_domain: "google.com",
+      q: `${searchVal}`, //,merchagg:g8277688%7Cg829768`,
+      shopping_condition: "new",
+      shopping_merchants: "g8277688,g8299768,g7187155",
+    };
+    axios
+      .get("https://api.scaleserp.com/search", { params })
+      // .then((response) => response.json())
       .then((response) => {
-        console.log("response", response);
         const goodUrl = "google.com/shopping/product/";
-
-        const items = response.shopping_results
-          .filter((item) => {
-            return item.link.includes(goodUrl);
-          })
-          .slice(0, 10);
+        console.log(response.data);
+        const items = response.data.shopping_results;
+        //   .filter((item) => {
+        //     return item.link.includes(goodUrl);
+        //   })
+        //   .slice(0, 20);
 
         console.log("items: ", items);
         setOpen(true);
@@ -161,3 +167,6 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
 };
 
 export default Search;
+
+// https://www.google.com/search?q=headphones&gl=us&hl=en&tbm=shop&tbs=vw:l,new:1,merchagg:g8277688%7Cg829976,p_ord:p,
+// https://www.google.com/search?gl=us&hl=en&tbm=shop&q=headphones&tbs=vw:l,mr:1,p_ord:p,new:1,cat:505771,merchagg:g8277688%7Cg829976%7Cg8299768&sa=X&ved=0ahUKEwiM3dzlvYvuAhVGcq0KHcZFArYQsysIvgUoBQ&biw=1860&bih=1257
