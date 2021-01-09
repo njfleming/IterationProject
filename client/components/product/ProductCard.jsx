@@ -8,6 +8,7 @@ import {
 	CardMedia,
 	Button,
 	Typography,
+	ButtonBase,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from '../../style/theme';
@@ -36,6 +37,10 @@ const ProductCard = ({
 					flexDirection: 'column',
 				}}
 			>
+			<ButtonBase 
+				onClick = { alert("Don't touch meeee")}
+
+			>
 				<CardActionArea style={{ height: 300 }}>
 					<CardMedia
 						className={classes.productCardMedia}
@@ -61,6 +66,7 @@ const ProductCard = ({
 						Id: {productId}
 					</Typography>
 				</CardContent>
+				</ButtonBase>
 				<CardActions>
 					<Button
 						onClick={handleClick}
@@ -73,6 +79,7 @@ const ProductCard = ({
 						Delete
 					</Button>
 				</CardActions>
+				
 			</Card>
 		</Grid>
 	);

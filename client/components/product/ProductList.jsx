@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import { v4 as uuidv4 } from 'uuid';
+import { Switch } from 'react-router-dom';
 
 const ProductList = ({ list, deleteProduct }) => {
 	const productItems = list.map(
