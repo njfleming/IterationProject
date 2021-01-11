@@ -50,7 +50,7 @@ const Register = ({ registerUser, setOpen, ...rest }) => {
 			<form className={classes.loginForm} onSubmit={handleSubmit}>
 				<TextField
 					className={classes.loginTextField}
-					id="email"
+					id="email2"
 					label="Email"
 					variant="filled"
 					value={emailInput}
@@ -58,7 +58,7 @@ const Register = ({ registerUser, setOpen, ...rest }) => {
 				/>
 				<TextField
 					className={classes.loginTextField}
-					id="password"
+					id="password2"
 					label="Password"
 					variant="filled"
 					value={pwInput}
