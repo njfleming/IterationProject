@@ -4,7 +4,7 @@ const path = require("path");
 const authRouter = require("./routes/authRouter");
 const productRouter = require("./routes/productRouter");
 const cors = require("cors");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 const app = express();
 
