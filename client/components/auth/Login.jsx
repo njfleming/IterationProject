@@ -129,6 +129,7 @@ const Login = ({ registerUser, loginUser, ...rest }) => {
 											<IconButton
 												aria-label="toggle password visibility"
 												onClick={handleClickShowPassword}
+												className="pw-toggle"
 											>
 												{showPassword ? <Visibility /> : <VisibilityOff />}
 											</IconButton>
