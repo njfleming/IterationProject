@@ -30,7 +30,6 @@ productController.getProducts = (req, res, next) => {
     });
 };
 
-
 //Add Product Controller- POST Request:
 productController.addProduct = async (req, res, next) => {
   // front end sends user_id and google_url only.  Then we use puppeteer to scrape the following:
@@ -49,7 +48,6 @@ productController.addProduct = async (req, res, next) => {
 
   //Add google_url to object:
   productInfo.google_url = google_url;
-
 
   //Query to check if the product is already in the products table.
   let productInTableQuery = `SELECT * FROM products WHERE products.google_url=$1`;
@@ -76,10 +74,11 @@ productController.addProduct = async (req, res, next) => {
   const usersToProductsValues = [user, productId];
 
   //Add to lowest_daily_price table using product_id:
-  const lowestDailyPriceQuery = `INSERT into lowest_daily_price (product_id, store_name, lowest_daily_price,	store_url) VALUES ($1,$2,$3,$4)`;
-
+  const lowestDailyPriceQuery = `INSERT into lowest_daily_price (product_id, timestamp, store_name, lowest_daily_price,	store_url) VALUES ($1,$2,$3,$4,$5)`;
+  const date = new Date().toDateString();
   const lowestDailyPriceValues = [
     productId,
+    date,
     productInfo.store_name,
     productInfo.lowest_daily_price,
     productInfo.store_url,
@@ -93,7 +92,7 @@ productController.addProduct = async (req, res, next) => {
       lowestDailyPriceQuery,
       lowestDailyPriceValues
     );
-  
+
     return next();
   } catch (err) {
     console.log("error: ", error);
@@ -114,7 +113,6 @@ productController.deleteProduct = (req, res, next) => {
   priceTrackerDB
     .query(deleteProductFromUser, values)
     .then((data) => {
-
       return next();
     })
     .catch((err) => {
