@@ -170,6 +170,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         <Grid item xs={10} justify="center">
           <form onSubmit={handleSubmit}>
             <TextField
+              id="search_bar"
               className={classes.searchBar}
               variant="outlined"
               label="Search for a product"
@@ -182,6 +183,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         <Grid item xs={2}>
           <Button
             className={classes.searchBtn}
+            id="search_btn"
             variant="contained"
             color="primary"
             onClick={handleSubmit}
