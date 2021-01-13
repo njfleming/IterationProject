@@ -2,9 +2,9 @@ const request = require("supertest");
 
 const server = "http://localhost:8080";
 
-describe("Route Integration", () => {
-  describe("GET", () => {
-    it("responds with 200 status and JSON Object", () =>
+describe("Product Route Integration", () => {
+  describe("GET /products", () => {
+    it("responds with 200 status and application/json content type", () =>
       request(server)
         .get("/api/products/1")
         .expect("Content-Type", /application\/json/)
@@ -30,25 +30,42 @@ describe("Route Integration", () => {
           });
         }));
   });
-  describe("POST", () => {
-    it("responds with 200 status and text/html content type", () => {
-      const url =
-        "https://www.google.com/shopping/product/18187242513988350226";
+
+  describe("POST /products", () => {
+    it("responds with 200 status and application/json content type", () => {
+      const url = {
+        google_url:
+          "https://www.google.com/shopping/product/18187242513988350226",
+      };
       return request(server)
         .post("/api/products/1")
-
-        .expect("Content-Type", /text\/html/)
         .send(url)
+        .expect("Content-Type", /application\/json/)
         .expect(200);
     });
 
-    // it("returns with the String 'Added product'", () => {
-    //   const url =
-    //     "https://www.google.com/shopping/product/18187242513988350226";
-    //   return request(server)
-    //     .post("/api/products/1")
-    //     .send(url)
-    //     .then((res) => expect(res.body).toEqual("Added product"));
-    // });
+    it("returns with the String 'Added product'", () => {
+      const url = {
+        google_url:
+          "https://www.google.com/shopping/product/18187242513988350226",
+      };
+      return request(server)
+        .post("/api/products/1")
+        .send(url)
+        .then((res) => expect(res.body).toEqual("Added product"));
+    });
+  });
+
+  describe("DELETE /products", () => {
+    it("responds with 200 status and application/json content type", () =>
+      request(server)
+        .delete("/api/products/1/24")
+        .expect("Content-Type", /application\/json/)
+        .expect(200));
+
+    it("returns with the String 'Delete product'", () =>
+      request(server)
+        .delete("/api/products/1/24")
+        .then((res) => expect(res.body).toEqual("Delete product")));
   });
 });
