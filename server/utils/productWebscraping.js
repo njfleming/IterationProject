@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 /*
-This file contains a function that webscrapes a google URL and outputs all the necessary info needed into an object including: 
+This file contains a function that webscrapes a google URL and outputs all the necessary info needed into an object including:
 productInfo Object = {
   lowest_daily_price,
   product_name,
@@ -22,17 +22,16 @@ const getProductInfo = async (url) => {
 
   const productInfo = {};
 
-//Checks if google url website exist?
-    const pageNotFound= await page.evaluate(() => {
-    return !!document.querySelector('.product-not-found') 
-  })
-  if (pageNotFound) { 
-    console.log('True')
-    await browser.close()
+  //Checks if google url website exist?
+  const pageNotFound = await page.evaluate(() => {
+    return !!document.querySelector(".product-not-found");
+  });
+  if (pageNotFound) {
+    console.log("True");
+    await browser.close();
   } else {
-    console.log('False')
+    console.log("False");
   }
-
 
   //1. Get lowestDailyPrice:
   productInfo.lowest_daily_price = await page.$eval(
@@ -61,8 +60,17 @@ const getProductInfo = async (url) => {
     el.getAttribute("src")
   );
 
-  // console.log("productInfo OBJECT: ", productInfo);
-  
+  console.log("productInfo OBJECT: ", productInfo);
+
+  // let newPage = await Promise.all([
+  //   // Manual clicking of the link
+  //   page.$eval(".EJbZzc", (el) => el.click()),
+  //   page.waitForNavigation(),
+  // ]).catch((e) => console.log(e));
+
+  // let storeName = await newPage.$eval(".b5ycib", (el) => el.innerHTML);
+  // console.log(storeName);
+
   await browser.close();
 
   return productInfo;

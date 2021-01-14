@@ -4,7 +4,7 @@ const path = require("path");
 const authRouter = require("./routes/authRouter");
 const productRouter = require("./routes/productRouter");
 const cors = require("cors");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 const app = express();
 
@@ -18,8 +18,9 @@ app.use("/build", express.static(path.join(__dirname, "../build")));
 //Route Handlers:
 //localhost:8080/api/auth/signup
 app.use("/api/auth", authRouter);
-
 //localhost:8080/api/products/getproducts
+// app.get("/api/products/update", productRouter)
+
 app.use("/api", productRouter);
 
 app.get("/api/", (req, res) => {
