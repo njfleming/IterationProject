@@ -61,7 +61,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
     merchants = arr.join(",");
     console.log("merchants", merchants);
     const params = {
-      api_key: "ABE9756864C54FA78838C0FCAD6E4D33",
+      api_key: "CD73F000ECD64896BF38A4F007A654BA",
       search_type: "shopping",
       sort_by: "relevance",
       gl: "us",
