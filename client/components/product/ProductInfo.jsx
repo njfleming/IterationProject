@@ -9,17 +9,25 @@ import {
 	Button,
 	Typography,
 	ButtonBase,
+    Paper,
 } from '@material-ui/core';
+// import { ArgumentAxis, ValueAxis, LineSeries } from '@devexpress/dx-react-chart-material-ui';
 import useStyles from '../../style/theme';
 
-const ProductInfo = ({ productCard }) => {
+const ProductInfo = ({ productCard, boxData }) => {
     
     const classes = useStyles();
 
     return (
-        <div className={classes.infoForm} >
-            <h2>hi</h2>
-        </div>
+        <Paper>
+            <Typography></Typography>
+            {/* <Chart data={data} >
+                <ArgumentAxis />
+                <ValueAxis />
+                <LineSeries argumentField="date" valueField="price" />
+            </Chart> */}
+
+        </Paper>
 
     )
 }

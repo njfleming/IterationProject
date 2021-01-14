@@ -21,13 +21,17 @@ const ProductCard = ({
 	productId,
 	deleteProduct,
 	storeUrl,
+	openInfo,
+	getPriceHistory,
 }) => {
 	const handleClick = () => {
 		deleteProduct(productId);
 	};
 
-	const moreInfoClick = () => {
+	const moreInfoClick = (id) => {
+		getPriceHistory(id)
 		openInfo()
+		
 	}
 
 	const classes = useStyles();
@@ -70,7 +74,7 @@ const ProductCard = ({
 				</CardContent>
 				<CardActions>
 					<Button
-						onClick={moreInfoClick}
+						onClick={moreInfoClick(productId)}
 						variant="contained"
 						size="small"
 						startIcon={<MoreIcon />}
@@ -92,9 +96,6 @@ const ProductCard = ({
 				
 			</Card>
 		</Grid>
-		{/* <Dialog open={infoOpen} onClose={handleInfoClose} >
-				<ProductInfo />
-		</Dialog> */}
 		</>
 	);
 };

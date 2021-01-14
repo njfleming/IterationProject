@@ -30,6 +30,28 @@ productController.getProducts = (req, res, next) => {
     });
 };
 
+productController.getPriceHistory = (req, res, next) => {
+  const query = `SELECT (lowest_daily_price, product_id, timestamp)
+  FROM products
+  JOIN lowest_daily_price ON lowest_daily_price.product_id=products._id
+  WHERE lowest_daily_price.product_id=$1
+  ORDER BY lowest_daily_price.timestamp DESC;`
+
+  priceTrackerDB
+    .query(query, [req.params.id])
+    .then((data) => {
+      res.locals.priceHistory = data
+      console.log('price history: ' + data)
+      return next()
+    })
+    .catch((err) => {
+      console.log(err);
+      return next(
+        res.status(400).send("ERROR in getPriceHistory controller: " + err)
+      );
+    });
+
+}
 
 //Add Product Controller- POST Request:
 productController.addProduct = async (req, res, next) => {

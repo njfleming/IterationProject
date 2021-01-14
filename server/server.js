@@ -22,12 +22,14 @@ app.use("/api/auth", authRouter);
 //localhost:8080/api/products/getproducts
 app.use("/api", productRouter);
 
+app.get("/api/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
-app.get("/api/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
-});
+
 
 app.listen(PORT, () => console.log("Server Running On Port " + PORT));

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NavBar from './nav/NavBar';
 import ProductList from './product/ProductList';
+import ProductInfo from './product/ProductInfo';
 import Search from './search/Search';
 import Spinner from './search/Spinner';
 import ScrollTop from './product/ScrollTop';
-import { Grid, Fab, Dialog } from '@material-ui/core';
+import { Grid, Fab, Dialog, Paper } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const Main = ({ email, logOut, userId }) => {
@@ -16,6 +17,8 @@ const Main = ({ email, logOut, userId }) => {
 	const [productId, setProductId] = useState(null);
 	const [spinner, setSpinner] = useState(false);
 	const [infoOpen, setInfoOpen] = useState(false);
+	const [boxProductId, setBoxProductId] = useState(null);
+	const [boxData, setBoxData] = useState({})
 
 	const startSpinner = () => {
 		console.log('spinner heard');
@@ -35,6 +38,18 @@ const Main = ({ email, logOut, userId }) => {
 			.catch((err) => console.log(err));
 	};
 
+	const getPriceHistory = (id) => {
+		fetch(`/products/priceHistory/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			}
+		})
+		.then((res) => res.json())
+		.then(({ priceHistory }) => setBoxData(priceHistory))
+		.catch((err) => console.log(err));
+	}
+
 	//add product to userList
 	const addProduct = (stateObj) => {
 		Object.assign(postObj.current, stateObj);
@@ -45,8 +60,11 @@ const Main = ({ email, logOut, userId }) => {
 	const deleteProduct = (productId) => setProductId(productId);
 
 	//open dialog w/ exapnded info
-	const openDialogBox = () => setInfoOpen(true)
+	const openDialogBox = () => {
+		setInfoOpen(true)
+	}
 	const handleInfoClose = () => setInfoOpen(false)
+	// const setBoxId = (id) => setBoxProductId(id)
 
 	//useEffect: userId/CDM
 	useEffect(() => {
@@ -126,6 +144,12 @@ const Main = ({ email, logOut, userId }) => {
 		setProductId(null);
 	}, [productId]);
 
+	//update data for Info box
+	// useEffect(() => {
+	// 	if (!infoOpen) return
+	// 	getPriceHistory()
+	// }, [infoOpen])
+
 	if (spinner) return <Spinner />;
 
 
@@ -158,9 +182,14 @@ const Main = ({ email, logOut, userId }) => {
 					md={10}
 					xl={9}
 				>
-					<ProductList list={list} deleteProduct={deleteProduct} openInfo={openDialogBox} />
+					<ProductList list={list} deleteProduct={deleteProduct} openInfo={openDialogBox} getPriceHistory={getPriceHistory} />
 				</Grid>
 			</Grid>
+			<Paper>
+				<Dialog open={infoOpen} onClose={handleInfoClose}>
+					<ProductInfo boxData={boxData} />
+				</Dialog>
+			</Paper>
 			<ScrollTop>
 				<Fab color="primary" size="small" aria-label="scroll back to top">
 					<KeyboardArrowUpIcon />

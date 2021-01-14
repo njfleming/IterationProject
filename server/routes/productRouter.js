@@ -4,6 +4,14 @@ const productController = require("../controllers/ProductControllers");
 
 //Product Routers:
 
+productRouter.get(
+  "/products/priceHistory/:id",
+  productController.getPriceHistory,
+  (req, res) => {
+    res.status(200).json({ priceHistory: res.locals.priceHistory });
+  }
+);
+
 //Get All Products:
 //GET Request
 productRouter.get(
