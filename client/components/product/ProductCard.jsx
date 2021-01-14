@@ -8,9 +8,9 @@ import {
 	CardMedia,
 	Button,
 	Typography,
-	ButtonBase,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import MoreIcon from '@material-ui/icons/More';
 import useStyles from '../../style/theme';
 
 const ProductCard = ({
@@ -26,9 +26,14 @@ const ProductCard = ({
 		deleteProduct(productId);
 	};
 
+	const moreInfoClick = () => {
+		openInfo()
+	}
+
 	const classes = useStyles();
 
 	return (
+		<>
 		<Grid item xs={12} sm={6} md={4} lg={3}>
 			<Card
 				className={classes.productCard}
@@ -37,10 +42,7 @@ const ProductCard = ({
 					flexDirection: 'column',
 				}}
 			>
-			<ButtonBase 
-				onClick = { alert("Don't touch meeee")}
-
-			>
+		
 				<CardActionArea style={{ height: 300 }}>
 					<CardMedia
 						className={classes.productCardMedia}
@@ -66,11 +68,19 @@ const ProductCard = ({
 						Id: {productId}
 					</Typography>
 				</CardContent>
-				</ButtonBase>
 				<CardActions>
 					<Button
-						onClick={handleClick}
+						onClick={moreInfoClick}
 						variant="contained"
+						size="small"
+						startIcon={<MoreIcon />}
+						style={{ flexGrow: 1 }}
+					>
+						More Info
+					</Button>
+					<Button
+						onClick={handleClick}
+						variant="outlined"
 						color="secondary"
 						size="small"
 						startIcon={<DeleteIcon />}
@@ -82,6 +92,10 @@ const ProductCard = ({
 				
 			</Card>
 		</Grid>
+		{/* <Dialog open={infoOpen} onClose={handleInfoClose} >
+				<ProductInfo />
+		</Dialog> */}
+		</>
 	);
 };
 

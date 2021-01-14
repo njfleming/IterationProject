@@ -13,25 +13,15 @@ import {
 import useStyles from '../../style/theme';
 
 const ProductInfo = ({ productCard }) => {
+    
+    const classes = useStyles();
 
+    return (
+        <div className={classes.infoForm} >
+            <h2>hi</h2>
+        </div>
 
-    return {
-        <Card 
-            // className={`${classes.productCard}+info`}
-            style={{
-                display: 'flex',
-                flexDirection: 'column'
-            }}
-        >
-            <CardActionArea style={{ height: 300 }}>
-                <CardMedia
-                    className={classes.productCardMedia}
-                    image={imageUrl}
-                    title={productName}
-                />
-            </CardActionArea>
-        </Card>
-    }
+    )
 }
 
 export default ProductInfo

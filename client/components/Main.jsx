@@ -4,7 +4,7 @@ import ProductList from './product/ProductList';
 import Search from './search/Search';
 import Spinner from './search/Spinner';
 import ScrollTop from './product/ScrollTop';
-import { Grid, Fab } from '@material-ui/core';
+import { Grid, Fab, Dialog } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const Main = ({ email, logOut, userId }) => {
@@ -15,6 +15,7 @@ const Main = ({ email, logOut, userId }) => {
 	const [fetchProduct, setFetch] = useState(false);
 	const [productId, setProductId] = useState(null);
 	const [spinner, setSpinner] = useState(false);
+	const [infoOpen, setInfoOpen] = useState(false);
 
 	const startSpinner = () => {
 		console.log('spinner heard');
@@ -42,6 +43,10 @@ const Main = ({ email, logOut, userId }) => {
 
 	//delete product from userList
 	const deleteProduct = (productId) => setProductId(productId);
+
+	//open dialog w/ exapnded info
+	const openDialogBox = () => setInfoOpen(true)
+	const handleInfoClose = () => setInfoOpen(false)
 
 	//useEffect: userId/CDM
 	useEffect(() => {
@@ -123,6 +128,7 @@ const Main = ({ email, logOut, userId }) => {
 
 	if (spinner) return <Spinner />;
 
+
 	return (
 		<>
 			<NavBar email={email} logOut={logOut} />
@@ -152,7 +158,7 @@ const Main = ({ email, logOut, userId }) => {
 					md={10}
 					xl={9}
 				>
-					<ProductList list={list} deleteProduct={deleteProduct} />
+					<ProductList list={list} deleteProduct={deleteProduct} openInfo={openDialogBox} />
 				</Grid>
 			</Grid>
 			<ScrollTop>
