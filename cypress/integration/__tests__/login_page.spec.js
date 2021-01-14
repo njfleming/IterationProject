@@ -31,18 +31,14 @@ context('Login Page', () => {
   it('Logs in when stored email and correct password are entered', () => {
     cy.get('#email')
       .type('test@test.com')
-      .should('have.value', 'test@test.com')
+      .should('have.value', 'test@test.com');
     cy.get('#password')
       .type('testtest')
-      .should('have.value', 'testtest')
+      .should('have.value', 'testtest');
     //Shows password
-    cy.get('.pw-toggle').click()
+    cy.get('.pw-toggle').click();
 
-    cy.contains('Log In').click()
-
-    it('successfully loads', () => {
-      cy.visit('/')
-    })
+    cy.contains('Log In').click();
   })
 })
 
