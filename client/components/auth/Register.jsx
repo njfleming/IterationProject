@@ -77,7 +77,7 @@ const Register = ({ registerUser, setOpen, ...rest }) => {
 				/>
 				<FormControlLabel
 					control={
-						<Checkbox onClick={handleClickShowPassword} color="primary" />
+						<Checkbox className='pw-checkbox' onClick={handleClickShowPassword} color="primary" />
 					}
 					label="Show Password"
 					style={{ width: '40%' }}

@@ -63,6 +63,7 @@ const ProductCard = ({
 				</CardContent>
 				<CardActions>
 					<Button
+						id="delete_btn"
 						onClick={handleClick}
 						variant="contained"
 						color="secondary"
