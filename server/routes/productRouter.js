@@ -1,8 +1,20 @@
 const express = require("express");
+const { product } = require("puppeteer");
 const productRouter = express.Router();
 const productController = require("../controllers/ProductControllers");
 
 //Product Routers:
+
+//Update the daily price for all products in database
+//GET request
+productRouter.get(
+  "/products/updatePricing",
+  productController.updateTimestamp,
+  productController.filterTimes,
+  (req, res) => {
+    res.status(200).json({ updated: res.locals.timestamp });
+  }
+);
 
 //Get All Products:
 //GET Request

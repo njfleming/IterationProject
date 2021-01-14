@@ -6,6 +6,23 @@ import Spinner from "./search/Spinner";
 import ScrollTop from "./product/ScrollTop";
 import { Grid, Fab } from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import schedule from "node-schedule";
+
+const scheduleDailyCheck = schedule.scheduleJob("0 * * *", function () {
+  console.log("scheduler called");
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  console.log("yesterday", yesterday);
+  fetch(`/api/products/updatePricing`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then(({ updated }) => console.log("scheduler completed", updated))
+    .catch((err) => console.log(err));
+});
 
 const Main = ({ email, logOut, userId }) => {
   const postObj = useRef({});
