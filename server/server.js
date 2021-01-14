@@ -18,15 +18,16 @@ app.use("/build", express.static(path.join(__dirname, "../build")));
 //Route Handlers:
 //localhost:8080/api/auth/signup
 app.use("/api/auth", authRouter);
-
 //localhost:8080/api/products/getproducts
+// app.get("/api/products/update", productRouter)
+
 app.use("/api", productRouter);
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
-app.get("/api/", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
