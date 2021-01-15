@@ -1,19 +1,19 @@
 /// <reference types="cypress" />
 
-context('Window', () => {
+context("Window", () => {
   beforeEach(() => {
-    cy.visit('localhost:8080');
-  })
+    cy.visit("localhost:8080");
+  });
 
-  it('cy.window() - get the global window object', () => {
-    cy.window().should('have.property', 'top');
-  })
+  it("cy.window() - get the global window object", () => {
+    cy.window().should("have.property", "top");
+  });
 
-  it('cy.document() - get the document object', () => {
-    cy.document().should('have.property', 'charset').and('eq', 'UTF-8');
-  })
+  it("cy.document() - get the document object", () => {
+    cy.document().should("have.property", "charset").and("eq", "UTF-8");
+  });
 
-  it('cy.title() - get the title', () => {
-    cy.title().should('include', 'Price Tracker');
-  })
-})
+  it("cy.title() - get the title", () => {
+    cy.title().should("include", "Price Tracker");
+  });
+});
