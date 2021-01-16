@@ -173,6 +173,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         <Grid item xs={10} justify="center">
           <form onSubmit={handleSubmit}>
             <TextField
+              id="search_bar"
               className={classes.searchBar}
               variant="outlined"
               label="Search for a product"
@@ -185,6 +186,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         <Grid item xs={2}>
           <Button
             className={classes.searchBtn}
+            id="search_btn"
             variant="contained"
             color="primary"
             onClick={handleSubmit}
@@ -199,6 +201,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
             <FormLabel component="legend">Select Stores:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                id="target"
                 control={
                   <Switch
                     checked={stores.target}
@@ -209,6 +212,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Target"
               />
               <FormControlLabel
+                id="bestbuy"
                 control={
                   <Switch
                     checked={stores.bestbuy}
@@ -219,6 +223,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Best Buy"
               />
               <FormControlLabel
+                id="walmart"
                 control={
                   <Switch
                     checked={stores.walmart}
@@ -229,6 +234,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Walmart"
               />
               <FormControlLabel
+                id="apple"
                 control={
                   <Switch
                     checked={stores.apple}
@@ -239,6 +245,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Apple"
               />
               <FormControlLabel
+                id="newegg"
                 control={
                   <Switch
                     checked={stores.newegg}

@@ -47,6 +47,7 @@ const SearchCard = ({
         Id: {productId}
       </Typography> */}
       <Button
+        id="add_btn"
         onClick={handleClick}
         variant="contained"
         color="primary"
