@@ -9,7 +9,6 @@
     "dev": "NODE_ENV=development webpack serve & nodemon server/server.js",
     "test": "jest --verbose"
   },
-
   "nodemonConfig": {
     "ignore": [
       "client"
@@ -22,7 +21,6 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
-
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

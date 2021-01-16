@@ -20,7 +20,7 @@ const SearchList = ({
 		clearResults();
 	};
 
-	const resultList = results.map(({ title, image, link, merchant, price }) => (
+	const resultList = results.map(({ title, image, link, merchant, price, stores }) => (
 		<>
 			<SearchCard
 				productId={uuidv4()}
@@ -34,6 +34,7 @@ const SearchList = ({
 				addProduct={addProduct}
 				clearResults={clearResults}
 				startSpinner={startSpinner}
+				stores = {stores}
 			/>
 			<Divider className={classes.productDivider} />
 		</>
