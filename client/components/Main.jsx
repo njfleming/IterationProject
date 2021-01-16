@@ -78,6 +78,7 @@ const Main = ({ email, logOut, userId }) => {
     const lowest_daily_price = postObj.current.productPrice;
     const product_id = postObj.current.productId;
     const date = postObj.current.date;
+    const stores = postObj.current.stores
 
     console.log("track button heard");
 
@@ -96,6 +97,7 @@ const Main = ({ email, logOut, userId }) => {
         lowest_daily_price,
         product_id,
         date,
+        stores,
       }),
     })
       .then((res) => res.json())
