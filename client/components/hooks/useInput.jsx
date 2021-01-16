@@ -9,4 +9,5 @@ const useInput = (initVal) => {
 	return [value, handleChange, reset];
 };
 
+
 export default useInput;
