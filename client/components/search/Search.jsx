@@ -80,12 +80,15 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         const goodUrl = "google.com/shopping/product/";
         console.log(response.data);
         const items = response.data.shopping_results;
-        //   .filter((item) => {
-        //     return item.link.includes(goodUrl);
-        //   })
-        //   .slice(0, 20);
+          // .filter((item) => {
+          //   return item.link.includes(goodUrl);
+          // })
+          // .slice(0, 20);
         items.forEach(
-          (el) => (el.link = "https://www.google.com/shopping/product/" + el.id)
+          (el) => {
+            el.link = "https://www.google.com/shopping/product/" + el.id
+            el.stores = stores
+          }
         );
         console.log("items: ", items);
         setOpen(true);
@@ -173,6 +176,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         <Grid item xs={10} >
           <form onSubmit={handleSubmit}>
             <TextField
+              id="search_bar"
               className={classes.searchBar}
               variant="outlined"
               label="Search for a product"
@@ -185,6 +189,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         <Grid item xs={2}>
           <Button
             className={classes.searchBtn}
+            id="search_btn"
             variant="contained"
             color="primary"
             onClick={handleSubmit}
@@ -199,6 +204,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
             <FormLabel component="legend">Select Stores:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                id="target"
                 control={
                   <Switch
                     checked={stores.target}
@@ -209,6 +215,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Target"
               />
               <FormControlLabel
+                id="bestbuy"
                 control={
                   <Switch
                     checked={stores.bestbuy}
@@ -219,6 +226,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Best Buy"
               />
               <FormControlLabel
+                id="walmart"
                 control={
                   <Switch
                     checked={stores.walmart}
@@ -229,6 +237,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Walmart"
               />
               <FormControlLabel
+                id="apple"
                 control={
                   <Switch
                     checked={stores.apple}
@@ -239,6 +248,7 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
                 label="Apple"
               />
               <FormControlLabel
+                id="newegg"
                 control={
                   <Switch
                     checked={stores.newegg}

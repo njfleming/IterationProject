@@ -13,6 +13,7 @@ const SearchCard = ({
   productId,
   date,
   startSpinner,
+  stores,
 }) => {
   const stateObj = {
     productName: title,
@@ -22,6 +23,7 @@ const SearchCard = ({
     productPrice: price,
     productId,
     date,
+    stores,
   };
 
   const handleClick = () => {
@@ -37,14 +39,15 @@ const SearchCard = ({
         {date}
       </Typography>
       <Typography variant="h6">{title}</Typography>
-      <Typography variant="h4" color="primary">
+      {/* <Typography variant="h4" color="primary">
         ${price}
-      </Typography>
-      <Typography variant="subtitle1">{merchant}</Typography>
-      <Typography variant="overline" display="block">
+      </Typography> */}
+      {/* <Typography variant="subtitle1">{merchant}</Typography> */}
+      {/* <Typography variant="overline" display="block">
         Id: {productId}
-      </Typography>
+      </Typography> */}
       <Button
+        id="add_btn"
         onClick={handleClick}
         variant="contained"
         color="primary"
