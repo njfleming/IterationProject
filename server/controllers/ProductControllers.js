@@ -1,3 +1,4 @@
+const { json } = require("express");
 const priceTrackerDB = require("../models/priceTrackerModel.js");
 const getProductInfo = require("../utils/productWebscraping.js");
 
@@ -30,19 +31,20 @@ productController.getProducts = (req, res, next) => {
     });
 };
 
-<<<<<<< HEAD
 productController.getPriceHistory = (req, res, next) => {
-  const query = `SELECT (lowest_daily_price, product_id, timestamp)
+  const queryForPriceHistory = `SELECT lowest_daily_price, timestamp
   FROM products
   JOIN lowest_daily_price ON lowest_daily_price.product_id=products._id
   WHERE lowest_daily_price.product_id=$1
-  ORDER BY lowest_daily_price.timestamp DESC;`
+  ORDER BY lowest_daily_price.timestamp DESC;`;
+
+  let values = [req.params.id];
 
   priceTrackerDB
-    .query(query, [req.params.id])
+    .query(queryForPriceHistory, values)
     .then((data) => {
-      res.locals.priceHistory = data
-      console.log('price history: ' + data)
+      console.log("data rows in product controller:  " + JSON.stringify(data.rows))
+      res.locals.priceHistory = data.rows
       return next()
     })
     .catch((err) => {
@@ -53,7 +55,6 @@ productController.getPriceHistory = (req, res, next) => {
     });
 
 }
-=======
 productController.updateTimestamp = (req, res, next) => {
   console.log(req);
   console.log("type of yesterday", typeof yesterday);
@@ -61,12 +62,11 @@ productController.updateTimestamp = (req, res, next) => {
   FROM products
   JOIN lowest_daily_price ON lowest_daily_price.product_id=products._id
   ORDER BY lowest_daily_price.product_id,lowest_daily_price.timestamp DESC;`;
->>>>>>> ca25dd0f321cf40f2bc9b73cda064068bb271ffd
 
   priceTrackerDB
     .query(timestampQuery)
     .then((data) => {
-      console.log("update timestamp data", data.rows);
+      console.log("update timestamp data", data);
       res.locals.currentproducts = data.rows;
       return next();
     })

@@ -22,14 +22,14 @@ const ProductCard = ({
 	deleteProduct,
 	storeUrl,
 	openInfo,
-	getPriceHistory,
+	setBoxProductId,
 }) => {
 	const handleClick = () => {
 		deleteProduct(productId);
 	};
 
-	const moreInfoClick = (id) => {
-		getPriceHistory(id)
+	const moreInfoClick = () => {
+		setBoxProductId(productId)
 		openInfo()
 		
 	}
@@ -74,7 +74,7 @@ const ProductCard = ({
 				</CardContent>
 				<CardActions>
 					<Button
-						onClick={moreInfoClick(productId)}
+						onClick={moreInfoClick}
 						variant="contained"
 						size="small"
 						startIcon={<MoreIcon />}

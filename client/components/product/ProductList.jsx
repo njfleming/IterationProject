@@ -2,7 +2,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import { v4 as uuidv4 } from 'uuid';
 
-const ProductList = ({ list, deleteProduct, openInfo, getPriceHistory }) => {
+const ProductList = ({ list, deleteProduct, openInfo, setBoxProductId }) => {
 	const productItems = list.map(
 		({
 			product_name,
@@ -26,7 +26,7 @@ const ProductList = ({ list, deleteProduct, openInfo, getPriceHistory }) => {
 					storeUrl={store_url}
 					date={date}
 					openInfo={openInfo}
-					getPriceHistory={getPriceHistory}
+					setBoxProductId={setBoxProductId}
 				/>
 			);
 		}
