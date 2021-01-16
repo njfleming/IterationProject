@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 const { json } = require("express");
 const priceTrackerDB = require("../models/priceTrackerModel.js");
 const getProductInfo = require("../utils/productWebscraping.js");
-=======
-const priceTrackerDB = require('../models/priceTrackerModel.js');
-const getProductInfo = require('../utils/productWebscraping.js');
->>>>>>> main
 
 const productController = {};
 
@@ -71,11 +66,8 @@ productController.updateTimestamp = (req, res, next) => {
   priceTrackerDB
     .query(timestampQuery)
     .then((data) => {
-<<<<<<< HEAD
       console.log("update timestamp data", data);
-=======
       console.log('update timestamp data', data.rows);
->>>>>>> main
       res.locals.currentproducts = data.rows;
       return next();
     })

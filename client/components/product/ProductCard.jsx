@@ -74,16 +74,7 @@ const ProductCard = ({
 				</CardContent>
 				<CardActions>
 					<Button
-<<<<<<< HEAD
 						onClick={moreInfoClick}
-=======
-<<<<<<< HEAD
-						onClick={moreInfoClick(productId)}
-=======
-						id="delete_btn"
-						onClick={handleClick}
->>>>>>> 6204fa174a55e58ca735fba351b04a7a9a509949
->>>>>>> main
 						variant="contained"
 						size="small"
 						startIcon={<MoreIcon />}
