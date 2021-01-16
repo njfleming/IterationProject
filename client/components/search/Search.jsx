@@ -79,12 +79,15 @@ const Search = ({ userId, addProduct, startSpinner, getAllProducts }) => {
         const goodUrl = "google.com/shopping/product/";
         console.log(response.data);
         const items = response.data.shopping_results;
-        //   .filter((item) => {
-        //     return item.link.includes(goodUrl);
-        //   })
-        //   .slice(0, 20);
+          // .filter((item) => {
+          //   return item.link.includes(goodUrl);
+          // })
+          // .slice(0, 20);
         items.forEach(
-          (el) => (el.link = "https://www.google.com/shopping/product/" + el.id)
+          (el) => {
+            el.link = "https://www.google.com/shopping/product/" + el.id
+            el.stores = stores
+          }
         );
         console.log("items: ", items);
         setOpen(true);
